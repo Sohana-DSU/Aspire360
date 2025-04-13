@@ -1,74 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>AR Surgeon Simulator</title>
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.jsdelivr.net/npm/aframe@1.2.0/dist/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.4/dist/mindar-image-aframe.prod.js"></script>
+    <title>AR Surgeon Simulation</title>
+    <!-- A-Frame library -->
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <!-- AR.js for augmented reality functionality -->
+    <script src="https://cdn.jsdelivr.net/gh/jeromeetienne/AR.js/aframe/build/aframe-ar.js"></script>
     <style>
-      body, html { margin: 0; overflow: hidden; }
-      #steps {
-        position: absolute;
-        bottom: 20px;
-        left: 20px;
-        background: rgba(0,0,0,0.6);
-        color: white;
-        padding: 10px 15px;
-        font-family: sans-serif;
-        border-radius: 10px;
-        max-width: 90%;
-      }
-      #nextStepBtn {
-        background: #00bfa6;
-        color: white;
-        border: none;
-        padding: 10px 15px;
-        font-size: 14px;
-        border-radius: 5px;
-        cursor: pointer;
-        margin-top: 10px;
+      body {
+        margin: 0;
+        overflow: hidden;
       }
     </style>
   </head>
+  <body style="margin: 0; overflow: hidden;">
 
-  <body>
-    <div id="steps">
-      <div id="stepText">Step 1: Place the scalpel on the marked area.</div>
-      <button id="nextStepBtn">Next Step</button>
-    </div>
-
-    <a-scene mindar-image="imageTargetSrc: target.mind; autoStart: true; uiScanning: true; uiLoading: true" 
-             embedded color-space="sRGB" 
-             renderer="colorManagement: true, physicallyCorrectLights" 
-             vr-mode-ui="enabled: false" 
-             device-orientation-permission-ui="enabled: true">
-
-      <a-assets>
-        <a-asset-item id="heartModel" src="heart.glb"></a-asset-item>
-      </a-assets>
-
-      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
-
-      <a-entity mindar-image-target="targetIndex: 0">
-        <a-gltf-model id="heart" src="#heartModel" position="0 0 0" rotation="0 0 0" scale="0.3 0.3 0.3"></a-gltf-model>
-      </a-entity>
-
+    <!-- A-Frame Scene for AR -->
+    <a-scene embedded arjs>
+      <!-- Marker setup using "hiro" marker -->
+      <a-marker preset="hiro">
+        <!-- Your AR content goes here, like a 3D model -->
+        <a-entity 
+          geometry="primitive: box; height: 1; width: 1; depth: 1;" 
+          material="color: red;" 
+          position="0 0.5 0">
+        </a-entity>
+      </a-marker>
+      
+      <!-- Camera setup to interact with the scene -->
+      <a-entity camera></a-entity>
     </a-scene>
 
-    <script>
-      const steps = [
-        "Step 1: Place the scalpel on the marked area.",
-        "Step 2: Make an incision carefully.",
-        "Step 3: Observe the heart beating.",
-        "Step 4: Simulate removing a blockage.",
-        "Step 5: Close the incision properly."
-      ];
-      let currentStep = 0;
-
-      document.getElementById("nextStepBtn").addEventListener("click", () => {
-        currentStep = (currentStep + 1) % steps.length;
-        document.getElementById("stepText").innerText = steps[currentStep];
-      });
-    </script>
   </body>
 </html>
