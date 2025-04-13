@@ -4,34 +4,35 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AR Surgeon Simulation</title>
-    <!-- A-Frame library -->
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <!-- AR.js for augmented reality functionality -->
-    <script src="https://cdn.jsdelivr.net/gh/jeromeetienne/AR.js/aframe/build/aframe-ar.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@1.9.0/dist/model-viewer.js"></script>
     <style>
       body {
         margin: 0;
-        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f0f0f0;
+      }
+      model-viewer {
+        width: 80%;
+        height: 80%;
       }
     </style>
   </head>
-  <body style="margin: 0; overflow: hidden;">
+  <body>
+    <h1 style="text-align: center;">Surgeon AR Simulation</h1>
 
-    <!-- A-Frame Scene for AR -->
-    <a-scene embedded arjs>
-      <!-- Marker setup using "hiro" marker -->
-      <a-marker preset="hiro">
-        <!-- Your AR content goes here, like a 3D model -->
-        <a-entity 
-          geometry="primitive: box; height: 1; width: 1; depth: 1;" 
-          material="color: red;" 
-          position="0 0.5 0">
-        </a-entity>
-      </a-marker>
-      
-      <!-- Camera setup to interact with the scene -->
-      <a-entity camera></a-entity>
-    </a-scene>
-
+    <!-- 3D model viewer with AR functionality -->
+    <model-viewer 
+      src="your-3d-model.glb" 
+      alt="A 3D model of an organ or scalpel" 
+      ar 
+      ar-modes="webxr scene-viewer quick-look"
+      camera-controls
+      auto-rotate
+      background-color="#ffffff">
+    </model-viewer>
+    
   </body>
 </html>
