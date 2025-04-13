@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AR Surgeon Simulator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/aframe@1.2.0/dist/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.4/dist/mindar-image-aframe.prod.js"></script>
+    <style>
+      body, html { margin: 0; overflow: hidden; }
+      #steps {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        background: rgba(0,0,0,0.6);
+        color: white;
+        padding: 10px 15px;
+        font-family: sans-serif;
+        border-radius: 10px;
+        max-width: 90%;
+      }
+      #nextStepBtn {
+        background: #00bfa6;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        font-size: 14px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="steps">
+      <div id="stepText">Step 1: Place the scalpel on the marked area.</div>
+      <button id="nextStepBtn">Next Step</button>
+    </div>
+
+    <a-scene mindar-image="imageTargetSrc: assets/target.mind; autoStart: true; uiScanning: true; uiLoading: true" 
+             embedded color-space="sRGB" 
+             renderer="colorManagement: true, physicallyCorrectLights" 
+             vr-mode-ui="enabled: false" 
+             device-orientation-permission-ui="enabled: true">
+
+      <a-assets>
+        <a-asset-item id="heartModel" src="assets/heart.glb"></a-asset-item>
+      </a-assets>
+
+      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+      <a-entity mindar-image-target="targetIndex: 0">
+        <a-gltf-model id="heart" src="#heartModel" position="0 0 0" rotation="0 0 0" scale="0.3 0.3 0.3"></a-gltf-model>
+      </a-entity>
+
+    </a-scene>
+
+    <script>
+      const steps = [
+        "Step 1: Place the scalpel on the marked area.",
+        "Step 2: Make an incision carefully.",
+        "Step 3: Observe the heart beating.",
+        "Step 4: Simulate removing a blockage.",
+        "Step 5: Close the incision properly."
+      ];
+      let currentStep = 0;
+
+      document.getElementById("nextStepBtn").addEventListener("click", () => {
+        currentStep = (currentStep + 1) % steps.length;
+        document.getElementById("stepText").innerText = steps[currentStep];
+      });
+    </script>
+  </body>
+</html>
